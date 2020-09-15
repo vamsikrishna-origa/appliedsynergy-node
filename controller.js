@@ -30,13 +30,13 @@ api.fetch = function (req, res) {
         "$and": []
     };
     if (body.name) {
-        searchFilter.$and.push({ name: body.name });
+        searchFilter.$and.push({ name:{ $regex: body.name, $options: "i" }  });
     }
-    if (body.category) {
+    if (body.category && body.category.length != 0) {
         searchFilter.$and.push({ category: { $in: body.category } })
     }
-    if (body.color) {
-        searchFilter.$and.push({ color: body.color });
+    if (body.color && body.color.length != 0) {
+        searchFilter.$and.push({ color:{ $in: body.color } });
     }
     if (body.priceRange) {
         if (body.priceRange.maximum && body.priceRange.minimum) {
